@@ -8,8 +8,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.hear_ref }}
       - name: Setup Python
         uses: actions/setup-python@v4
         with:

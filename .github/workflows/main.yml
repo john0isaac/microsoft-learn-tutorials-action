@@ -7,11 +7,12 @@ on:
       - master
       
 jobs:
-  thanks_comment:
+  asses-pull-request:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - name: Add Label and thanks comment to Pull request
+        uses: actions/github-script@v6
         with:
           script: |
             const issueAuthor = context.payload.sender.login

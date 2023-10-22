@@ -9,7 +9,7 @@ def format_first_two_lines(filepath: string) -> None:
         filedata = file.read()
         line1, line2 = filedata.split('\n')[:2]
 
-    if line1 != "<!-- markdownlint-disable MD041 -->":
+    if "<!-- markdownlint-disable MD041 -->" not in line1:
         filedata = '<!-- markdownlint-disable MD041 -->\n\n' + filedata
         # Write the file out again
         with open(filepath, 'w', encoding="utf-8") as file:
@@ -20,8 +20,6 @@ def format_first_two_lines(filepath: string) -> None:
         # Write the file out again
         with open(filepath, 'w', encoding="utf-8") as file:
             file.write(filedata)
-    else:
-        pass
 
 # get tutorial folders
 path = './docs/dev/tutorials/'

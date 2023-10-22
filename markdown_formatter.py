@@ -47,7 +47,8 @@ def format_first_two_lines(filepath: str) -> None:
     # read the file data and store the first two lines content
     with open(filepath, 'r', encoding="utf-8") as file:
         filedata = file.read()
-        first_line, second_line = filedata.split('\n')[:2]
+        file.seek(0)
+        first_line, second_line = next(file), next(file)
 
     # check if first line doesn't contains the correct sentence
     if "<!-- markdownlint-disable MD041 -->" not in first_line:

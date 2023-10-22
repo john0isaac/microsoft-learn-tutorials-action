@@ -44,10 +44,13 @@ def get_tutorials_exercises_paths(root_path : str) -> dict:
 
 def format_first_two_lines(filepath: str) -> None:
     """Function that formats the first 2 lines in a tutorial exercise"""
-    # read the file data and store the first two lines content
+    # read the file data
     with open(filepath, 'r', encoding="utf-8") as file:
         filedata = file.read()
-        first_line, second_line = filedata.split('\n')[:2]
+
+    # read the file first two lines content
+    with open(filepath, 'r', encoding="utf-8") as file:
+        first_line, second_line = next(file), next(file)
 
     # check if first line doesn't contains the correct sentence
     if "<!-- markdownlint-disable MD041 -->" not in first_line:

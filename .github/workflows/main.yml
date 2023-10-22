@@ -18,7 +18,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting @${issueAuthor}! We will review the pull request and get back to you soon.'
+              body: '👋 Thanks for reporting @${{ issueAuthor }}! We will review the pull request and get back to you soon.'
             })
   format-first-two-lines:
     # Check if the PR is not from a fork

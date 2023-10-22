@@ -18,7 +18,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting! We will review the pull request and get back to you soon.'
+              body: '👋 Thanks for reporting @${issueAuthor}! We will review the pull request and get back to you soon.'
             })
   format-first-two-lines:
     # Check if the PR is not from a fork
@@ -41,6 +41,14 @@ jobs:
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Push Changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "fix first two lines formatting"
+          git push
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
@@ -50,13 +58,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'We have automatically fixed some issues in the first two lines please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.'
+              body: 'We have automatically fixed some issues in the first two lines of your exercises. Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.'
             })
-      - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "fix first two lines formatting"
-          git push

@@ -66,5 +66,6 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'We have automatically fixed some issues in the first two lines of your exercises. Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.'
+              body: `We have automatically fixed some issues in the first two lines of your exercises.
+                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.`
             })

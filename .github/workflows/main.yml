@@ -7,18 +7,26 @@ on:
       - master
       
 jobs:
-  thanks_comment:
+  asses-pull-request:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - name: Add Label and thanks comment to Pull request
+        uses: actions/github-script@v6
         with:
           script: |
+            const issueAuthor = context.payload.sender.login
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['needs-review']
+            })
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting @${{ context.issue.author }}! We will review the pull request and get back to you soon.'
+              body: `👋 Thanks for reporting @${ issueAuthor }! We will review the pull request and get back to you soon.`
             })
   format-first-two-lines:
     # Check if the PR is not from a fork
@@ -58,5 +66,6 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'We have automatically fixed some issues in the first two lines of your exercises. Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.'
+              body: `We have automatically fixed some issues in the first two lines of your exercises.
+                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.`
             })

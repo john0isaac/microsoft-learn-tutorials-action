@@ -47,10 +47,10 @@ def format_first_two_lines(filepath: str) -> None:
     # read the file data and store the first two lines content
     with open(filepath, 'r', encoding="utf-8") as file:
         filedata = file.read()
-        if len(filedata.split('\n')) > 2:
-            first_line, second_line = filedata.split('\n')[:2]
-        else:
-            first_line, second_line = '', ''
+        # check if if the file length is less than two sentences
+        if len(filedata.split('\n')) < 2:
+            return
+        first_line, second_line = filedata.split('\n')[:2]
         
 
     # check if first line doesn't contains the correct sentence

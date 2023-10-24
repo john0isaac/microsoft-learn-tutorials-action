@@ -8,7 +8,6 @@ on:
       
 jobs:
   asses-pull-request:
-    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Add Label and thanks comment to Pull request
@@ -29,8 +28,6 @@ jobs:
               body: `👋 Thanks for reporting @${ issueAuthor }! We will review the pull request and get back to you soon.`
             })
   format-first-two-lines:
-    # Check if the PR is not from a fork
-    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

@@ -84,11 +84,7 @@ jobs:
           python -m pip install --upgrade pip
       - name: Run Add empty last line
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'add_empty_last_line'
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
       - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -96,7 +92,6 @@ jobs:
           git commit -am "fix last line formatting"
           git push
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
         with:
           script: |

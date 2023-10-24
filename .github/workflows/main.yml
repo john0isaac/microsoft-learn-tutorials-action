@@ -65,7 +65,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `We have automatically fixed some issues in the first two lines of your exercises.
-                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.`
+                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.
+                     Run the following command in your terminal to view these changes `git pull`.`
             })
   add-empty-last-line:
     needs: format-first-two-lines
@@ -105,5 +106,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `We have automatically added an empty line to the end of your exercises.
-                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.`
+                     Please follow the contributing guide found [here](https://github.com/leestott/microsoft-cloud-pr/blob/main/CONTRIBUTING.md#general-guidance) to avoid this in the future.
+                     Run the following command in your terminal to view these changes `git pull`.
+                     `
             })

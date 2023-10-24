@@ -35,6 +35,12 @@ def main():
                     add_empty_last_line(markdown_file_path)
                 except FileNotFoundError:
                     logger.error('Failed to add an empty line to %s', markdown_file_path)
+            elif "replace_all_with_select" in in_arg.func:
+                try:
+                    logger.info('Replacing with Select')
+                    replace_all_with_select(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to replace with select in %s', markdown_file_path)
 
 
 # Helper Functions
@@ -59,7 +65,7 @@ def get_tutorials_exercises_paths(root_path : str) -> dict:
 
 def format_first_two_lines(filepath: str) -> None:
     """Function that formats the first 2 lines in a tutorial exercise"""
-    # read the file data and store the first two lines content
+    # read the file data, skip if file is small, and store the first two lines content
     with open(filepath, 'r', encoding="utf-8") as file:
         filedata = file.read()
         # check if if the file length is less than two sentences
@@ -83,7 +89,7 @@ def format_first_two_lines(filepath: str) -> None:
 
 def add_empty_last_line(filepath: str) -> None:
     """Function that formats the adds an empty line to the end of tutorial exercise"""
-    # read the file data and store the first two lines content
+    # read the file data, skip if file is small, and store the last line
     with open(filepath, 'r', encoding="utf-8") as file:
         filedata = file.read()
         # check if if the file length is less than two sentences
@@ -94,6 +100,30 @@ def add_empty_last_line(filepath: str) -> None:
     # check if first line doesn't contains the correct sentence
     if last_line not in ['\n', '\r\n', '', ' ']:
         filedata = filedata + '\n'
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            file.write(filedata)
+
+def replace_all_with_select(filepath: str) -> None:
+    """Function that replaces words "choose" and "click" with select"""
+    # read the file data and skip if file is small
+    with open(filepath, 'r', encoding="utf-8") as file:
+        filedata = file.read()
+        # check if if the file length is less than two sentences
+        if len(filedata.split('\n')) < 2:
+            return
+
+    try:
+        # starts with uppercase
+        filedata = filedata.replace('Choose', 'Select')
+        filedata = filedata.replace('Click', 'Select')
+        # starts with lowercase
+        filedata = filedata.replace('choose', 'select')
+        filedata = filedata.replace('click', 'select')
+        # ends with ing
+        filedata = filedata.replace('Choosing', 'Selecting')
+        filedata = filedata.replace('Clicking', 'Selecting')
+    finally:
         # Write the file out again
         with open(filepath, 'w', encoding="utf-8") as file:
             file.write(filedata)
@@ -120,8 +150,11 @@ def get_input_args():
     parser.add_argument('-d', '--dir', type = str, default = './docs/dev/tutorials/',
                     help = 'path to the root directory', required=True)
 
-    parser.add_argument('-f', '--func', type = str, required = True, help = 'function to be executed',
-                        choices=['first_two_lines', 'add_empty_last_line'])
+    parser.add_argument('-f', '--func', type = str, required = True,
+                        help = 'function to be executed',
+                        choices=['first_two_lines',
+                                 'add_empty_last_line',
+                                 'replace_all_with_select'])
 
     return parser.parse_args()
 

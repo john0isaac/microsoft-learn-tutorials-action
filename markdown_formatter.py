@@ -5,21 +5,36 @@ following the Microsoft Learn Guidelines
 """
 import os
 import argparse
+import logging
 
 def main():
     """Main program function defined below"""
+    logger = logging.getLogger()
+
     # get input arguments
     in_arg = get_input_args()
 
+    logger.info('Reading the tutorial exercises')
     tutorials = get_tutorials_exercises_paths(in_arg.dir)
+
     # iterate over the files to validate content
     for tutorial_folder_name, tutorial_exercises in tutorials.items():
         for tutorial_exercise in tutorial_exercises:
             markdown_file_path = os.path.join(
                 in_arg.dir,
                 tutorial_folder_name + '/includes/' + tutorial_exercise)
-            if in_arg.func == 'first_two_lines':
-                format_first_two_lines(markdown_file_path)
+            if "first_two_lines" in in_arg.func:
+                try:
+                    logger.info('Formatting the first two lines')
+                    format_first_two_lines(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to format the first two lines of %s', markdown_file_path)
+            elif "add_empty_last_line" in in_arg.func:
+                try:
+                    logger.info('Adding empty last line')
+                    add_empty_last_line(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to add an empty line to %s', markdown_file_path)
 
 
 # Helper Functions
@@ -66,6 +81,23 @@ def format_first_two_lines(filepath: str) -> None:
         with open(filepath, 'w', encoding="utf-8") as file:
             file.write(filedata)
 
+def add_empty_last_line(filepath: str) -> None:
+    """Function that formats the adds an empty line to the end of tutorial exercise"""
+    # read the file data and store the first two lines content
+    with open(filepath, 'r', encoding="utf-8") as file:
+        filedata = file.read()
+        # check if if the file length is less than two sentences
+        if len(filedata.split('\n')) < 2:
+            return
+        last_line = filedata.split('\n')[-1]
+
+    # check if first line doesn't contains the correct sentence
+    if last_line not in ['\n', '\r\n', '', ' ']:
+        filedata = filedata + '\n'
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            file.write(filedata)
+
 def get_input_args():
     """
     Retrieves and parses the 2 command line arguments provided by the user when
@@ -88,9 +120,8 @@ def get_input_args():
     parser.add_argument('-d', '--dir', type = str, default = './docs/dev/tutorials/',
                     help = 'path to the root directory', required=True)
 
-    parser.add_argument('-f', '--func', type = str, choices=['first_two_lines'],
-                        default = 'first_two_lines', help = 'function to be executed',
-                        required = True)
+    parser.add_argument('-f', '--func', type = str, required = True, help = 'function to be executed',
+                        choices=['first_two_lines', 'add_empty_last_line'])
 
     return parser.parse_args()
 

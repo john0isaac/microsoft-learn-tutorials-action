@@ -12,10 +12,10 @@ To get started, perform the following tasks:
 
     :::image type="content" source="../media/search-acs-portal.png" alt-text="ACS in the Azure Portal":::
 
-1. Click **Create** in the toolbar.
+1. Select **Create** in the toolbar.
 
 1. Perform the following tasks:
-    - Choose your Azure subscription.
+    - Select your Azure subscription.
     - Select the resource group to use (create a new one if one doesn't exist).
     - Enter an ACS resource name. It must be a unique value.
     - Select a data location.

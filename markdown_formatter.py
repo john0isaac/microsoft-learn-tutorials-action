@@ -51,7 +51,6 @@ def format_first_two_lines(filepath: str) -> None:
         if len(filedata.split('\n')) < 2:
             return
         first_line, second_line = filedata.split('\n')[:2]
-        
 
     # check if first line doesn't contains the correct sentence
     if "<!-- markdownlint-disable MD041 -->" not in first_line:

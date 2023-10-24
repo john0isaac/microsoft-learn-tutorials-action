@@ -8,7 +8,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 1. Visit the [Microsoft Cloud GitHub Repository](https://github.com/microsoft/MicrosoftCloud).
 
-1. Click the **Fork** option to add the repository to your desired GitHub organization/account.
+1. Select the **Fork** option to add the repository to your desired GitHub organization/account.
 
     :::image type="content" source="../media/fork-repo.png" alt-text="Fork a Repository":::
 

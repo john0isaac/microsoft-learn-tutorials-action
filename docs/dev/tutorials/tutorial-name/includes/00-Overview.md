@@ -28,4 +28,4 @@ In this tutorial, you'll learn how Azure Communication Services can be used in a
 - Azure Communication Services
 - Azure Functions
 - Microsoft Graph
-- Microsoft 
+- Microsoft

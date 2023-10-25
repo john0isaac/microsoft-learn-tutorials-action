@@ -126,7 +126,7 @@ def replace_all_with_select(filepath: str) -> None:
         # check if if the file length is less than two sentences
         if len(filedata.split('\n')) < 2:
             return
-
+    original_filedata = filedata
     try:
         # starts with uppercase
         filedata = filedata.replace(' Choose ', ' Select ')
@@ -138,9 +138,10 @@ def replace_all_with_select(filepath: str) -> None:
         filedata = filedata.replace('Choosing', 'Selecting')
         filedata = filedata.replace('Clicking', 'Selecting')
     finally:
-        # Write the file out again
-        with open(filepath, 'w', encoding="utf-8") as file:
-            file.write(filedata)
+        if original_filedata != filedata:
+            # Write the file out again
+            with open(filepath, 'w', encoding="utf-8") as file:
+                file.write(filedata)
 
 def remove_links_locale(filepath: str) -> None:
     """Function that replaces the country locale with a forward slash"""

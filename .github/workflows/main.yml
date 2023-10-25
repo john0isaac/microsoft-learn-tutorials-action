@@ -124,7 +124,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-      - name: Run Add empty last line
+      - name: Run Replace with select
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'replace_all_with_select'
       - name: Check for modified files
         id: git-check

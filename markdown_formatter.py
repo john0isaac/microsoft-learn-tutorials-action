@@ -89,7 +89,7 @@ def format_first_two_lines(filepath: str) -> None:
             file.write(filedata)
     # check if second line is not empty
     elif second_line not in ['\n', '\r\n', '', ' ']:
-        filedata = filedata.replace('<!-- markdownlint-disable MD041 -->', 
+        filedata = filedata.replace('<!-- markdownlint-disable MD041 -->',
                                     '<!-- markdownlint-disable MD041 -->\n')
         # Write the file out again
         with open(filepath, 'w', encoding="utf-8") as file:

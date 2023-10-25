@@ -115,11 +115,11 @@ def replace_all_with_select(filepath: str) -> None:
 
     try:
         # starts with uppercase
-        filedata = filedata.replace('Choose', 'Select')
-        filedata = filedata.replace('Click', 'Select')
+        filedata = filedata.replace(' Choose ', ' Select ')
+        filedata = filedata.replace(' Click ', ' Select ')
         # starts with lowercase
-        filedata = filedata.replace('choose', 'select')
-        filedata = filedata.replace('click', 'select')
+        filedata = filedata.replace(' choose ', ' select ')
+        filedata = filedata.replace(' click ', ' select ')
         # ends with ing
         filedata = filedata.replace('Choosing', 'Selecting')
         filedata = filedata.replace('Clicking', 'Selecting')

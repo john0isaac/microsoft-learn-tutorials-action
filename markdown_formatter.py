@@ -138,7 +138,7 @@ def replace_all_with_select(filepath: str) -> None:
         filedata = filedata.replace('Choosing', 'Selecting')
         filedata = filedata.replace('Clicking', 'Selecting')
     finally:
-        if original_filedata != filedata:
+        if filedata != original_filedata:
             # Write the file out again
             with open(filepath, 'w', encoding="utf-8") as file:
                 file.write(filedata)
@@ -152,12 +152,14 @@ def remove_links_locale(filepath: str) -> None:
         if len(filedata.split('\n')) < 2:
             return
 
+    original_filedata = filedata
     # match the following pattern / two small characters a ~ z - two small characters a ~ z /
     filedata = re.sub(r'\/[a-z]{2}-[a-z]{2}\/', '/', filedata)
 
-    # Write the file out again
-    with open(filepath, 'w', encoding="utf-8") as file:
-        file.write(filedata)
+    if filedata != original_filedata:
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            file.write(filedata)
 
 def get_input_args():
     """

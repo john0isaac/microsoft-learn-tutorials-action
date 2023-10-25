@@ -6,6 +6,7 @@ following the Microsoft Learn Guidelines
 import os
 import argparse
 import logging
+import re
 
 def main():
     """Main program function defined below"""
@@ -18,7 +19,6 @@ def main():
     # define list of folder to skip
     pass_list = ['acs-to-teams-meeting',
                  'aml-powerapps-powerautomate',
-                 'integrating-acs-powerplatform',
                  'openai-acs-msgraph']
 
     logger.info('Reading the tutorial exercises')
@@ -48,6 +48,12 @@ def main():
                     replace_all_with_select(markdown_file_path)
                 except FileNotFoundError:
                     logger.error('Failed to replace with select in %s', markdown_file_path)
+            elif "remove_links_locale" in in_arg.func:
+                try:
+                    logger.info('Removing links locale')
+                    remove_links_locale(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to remove locale from links in %s', markdown_file_path)
 
 
 # Helper Functions
@@ -120,7 +126,7 @@ def replace_all_with_select(filepath: str) -> None:
         # check if if the file length is less than two sentences
         if len(filedata.split('\n')) < 2:
             return
-    original_filedata = filedata
+
     try:
         # starts with uppercase
         filedata = filedata.replace(' Choose ', ' Select ')
@@ -132,10 +138,25 @@ def replace_all_with_select(filepath: str) -> None:
         filedata = filedata.replace('Choosing', 'Selecting')
         filedata = filedata.replace('Clicking', 'Selecting')
     finally:
-        if original_filedata != filedata:
-            # Write the file out again
-            with open(filepath, 'w', encoding="utf-8") as file:
-                file.write(filedata)
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            file.write(filedata)
+
+def remove_links_locale(filepath: str) -> None:
+    """Function that replaces the country locale with a forward slash"""
+    # read the file data and skip if file is small
+    with open(filepath, 'r', encoding="utf-8") as file:
+        filedata = file.read()
+        # check if if the file length is less than two sentences
+        if len(filedata.split('\n')) < 2:
+            return
+
+    # match the following pattern / two small characters a ~ z - two small characters a ~ z /
+    filedata = re.sub(r'\/[a-z]{2}-[a-z]{2}\/', '/', filedata)
+
+    # Write the file out again
+    with open(filepath, 'w', encoding="utf-8") as file:
+        file.write(filedata)
 
 def get_input_args():
     """
@@ -163,7 +184,9 @@ def get_input_args():
                         help = 'function to be executed',
                         choices=['first_two_lines',
                                  'add_empty_last_line',
-                                 'replace_all_with_select'])
+                                 'replace_all_with_select',
+                                 'remove_links_locale'
+                                 ])
 
     return parser.parse_args()
 

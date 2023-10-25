@@ -9,13 +9,20 @@ import logging
 
 def main():
     """Main program function defined below"""
+    # initialize logger
     logger = logging.getLogger()
 
     # get input arguments
     in_arg = get_input_args()
 
+    # define list of folder to skip
+    pass_list = ['acs-to-teams-meeting',
+                 'aml-powerapps-powerautomate',
+                 'integrating-acs-powerplatform',
+                 'openai-acs-msgraph']
+
     logger.info('Reading the tutorial exercises')
-    tutorials = get_tutorials_exercises_paths(in_arg.dir)
+    tutorials = get_tutorials_exercises_paths(in_arg.dir, pass_list)
 
     # iterate over the files to validate content
     for tutorial_folder_name, tutorial_exercises in tutorials.items():
@@ -45,7 +52,7 @@ def main():
 
 # Helper Functions
 
-def get_tutorials_exercises_paths(root_path : str) -> dict:
+def get_tutorials_exercises_paths(root_path : str, pass_list : list) -> dict:
     """
     Function to compile a dictionary of tutorial exercises with 
     the tutorial folder name as key
@@ -54,7 +61,8 @@ def get_tutorials_exercises_paths(root_path : str) -> dict:
     # get tutorial folders
     for item in os.listdir(root_path):
         if os.path.isdir(os.path.join(root_path, item)):
-            tutorials[item] = []
+            if item not in pass_list:
+                tutorials[item] = []
 
     # get tutorial exercises (includes folder content)
     for tutorial in tutorials.keys():

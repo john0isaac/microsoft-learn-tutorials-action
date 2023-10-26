@@ -54,6 +54,12 @@ def main():
                     remove_links_locale(markdown_file_path)
                 except FileNotFoundError:
                     logger.error('Failed to remove locale from links in %s', markdown_file_path)
+            elif "remove_relative_links" in in_arg.func:
+                try:
+                    logger.info('Removing relative links')
+                    remove_relative_links(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to remove relative links in %s', markdown_file_path)
 
 
 # Helper Functions
@@ -161,6 +167,24 @@ def remove_links_locale(filepath: str) -> None:
         with open(filepath, 'w', encoding="utf-8") as file:
             file.write(filedata)
 
+def remove_relative_links(filepath: str) -> None:
+    """Function that replaces relative links learn.microsoft.com/ with a forward slash"""
+    # read the file data and skip if file is small
+    with open(filepath, 'r', encoding="utf-8") as file:
+        filedata = file.read()
+        # check if if the file length is less than two sentences
+        if len(filedata.split('\n')) < 2:
+            return
+
+    original_filedata = filedata
+    # match the following pattern http:// or https:// or nothing followed by learn.microsoft.com
+    filedata = re.sub(r'(https?:\/\/)?(learn\.microsoft\.com)\/', '/', filedata)
+
+    if filedata != original_filedata:
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            file.write(filedata)
+
 def get_input_args():
     """
     Retrieves and parses the 2 command line arguments provided by the user when
@@ -188,7 +212,8 @@ def get_input_args():
                         choices=['first_two_lines',
                                  'add_empty_last_line',
                                  'replace_all_with_select',
-                                 'remove_links_locale'
+                                 'remove_links_locale',
+                                 'remove_relative_links'
                                  ])
 
     return parser.parse_args()

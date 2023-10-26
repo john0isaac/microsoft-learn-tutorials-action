@@ -50,7 +50,7 @@ jobs:
         with:
           commit_message: fix first two lines formatting
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -80,19 +80,12 @@ jobs:
           python -m pip install --upgrade pip
       - name: Run Add empty last line
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'add_empty_last_line'
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
-      - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "fix last line formatting"
-          git push
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix last line formatting
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -122,19 +115,12 @@ jobs:
           python -m pip install --upgrade pip
       - name: Run Replace with select
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'replace_all_with_select'
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
-      - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "fix replace all with select"
-          git push
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix replace all with select
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -164,19 +150,12 @@ jobs:
           python -m pip install --upgrade pip
       - name: Run Remove links locale
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'remove_links_locale'
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
-      - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "fix remove links locale"
-          git push
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix remove links locale
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -206,19 +185,12 @@ jobs:
           python -m pip install --upgrade pip
       - name: Run Remove relative links
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'remove_relative_links'
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
-      - name: Push Changes
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "fix remove relative links"
-          git push
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix remove relative links
       - name: Leave a comment
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: actions/github-script@v6
         with:
           script: |

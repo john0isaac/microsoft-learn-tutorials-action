@@ -15,7 +15,7 @@ In this tutorial, you'll learn how Azure Communication Services can be used in a
 ### Prerequisites
 
 - [Node](https://nodejs.org) - Node 16+ and npm 7+ are used for this project
-- [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git)
+- [git](/devops/develop/git/install-and-set-up-git)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 - [Azure subscription](https://azure.microsoft.com/free/search)

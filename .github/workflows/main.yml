@@ -212,9 +212,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
       - name: Run Remove relative links
-        run: |
-          git checkout ${{ github.head_ref }}
-          python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'remove_relative_links'
+        run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'remove_relative_links'
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT

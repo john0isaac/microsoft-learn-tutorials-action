@@ -111,7 +111,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix last line formatting"
-          git push origin ${{ steps.extract_branch.outputs.branch }}
+          git push https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git ${{ steps.extract_branch.outputs.branch }}:${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
@@ -160,7 +160,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix replace all with select"
-          git push origin ${{ steps.extract_branch.outputs.branch }}
+          git push https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git ${{ steps.extract_branch.outputs.branch }}:${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
@@ -209,7 +209,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix remove links locale"
-          git push origin ${{ steps.extract_branch.outputs.branch }}
+          git push https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git ${{ steps.extract_branch.outputs.branch }}:${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
@@ -257,7 +257,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix remove relative links"
-          git push origin ${{ steps.extract_branch.outputs.branch }}
+          git push https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git ${{ steps.extract_branch.outputs.branch }}:${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6

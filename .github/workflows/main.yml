@@ -62,7 +62,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix first two lines formatting"
-          git push origin ${{ github.event.pull_request.head.sha }}
+          git push ${{ github.event.pull_request.head.repo.full_name }}.git ${{ github.event.pull_request.head.sha }}:${{ github.event.pull_request.head.sha }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6

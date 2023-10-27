@@ -43,8 +43,8 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-      - name: checkout to pull request
-        run: gh pr checkout 30
+      - name: Checkout to pull request
+        run: gh pr checkout ${{ github.event.number }}
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Run Format First two lines function
@@ -52,13 +52,17 @@ jobs:
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Extract pull request branch name
+        if: steps.git-check.outputs.modified == 'true'
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       - name: Push Changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "fix first two lines formatting"
-          git push origin testing
+          git push origin ${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
         if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
@@ -88,14 +92,28 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+      - name: Checkout to pull request
+        run: gh pr checkout ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Run Add empty last line
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'add_empty_last_line'
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: fix last line formatting
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Extract pull request branch name
+        if: steps.git-check.outputs.modified == 'true'
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: Push Changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "fix last line formatting"
+          git push origin ${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
-        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -123,14 +141,28 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+      - name: Checkout to pull request
+        run: gh pr checkout ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Run Replace with select
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'replace_all_with_select'
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: fix replace all with select
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Extract pull request branch name
+        if: steps.git-check.outputs.modified == 'true'
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: Push Changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "fix replace all with select"
+          git push origin ${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
-        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
         with:
           script: |
@@ -158,14 +190,28 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+      - name: Checkout to pull request
+        run: gh pr checkout ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Run Remove links locale
         run: python markdown_formatter.py --dir './docs/dev/tutorials/' --func 'remove_links_locale'
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: fix remove links locale
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Extract pull request branch name
+        if: steps.git-check.outputs.modified == 'true'
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: Push Changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "fix remove links locale"
+          git push origin ${{ steps.extract_branch.outputs.branch }}
       - name: Leave a comment
-        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        if: steps.git-check.outputs.modified == 'true'
         uses: actions/github-script@v6
         with:
           script: |

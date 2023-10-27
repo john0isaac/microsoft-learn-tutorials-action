@@ -21,7 +21,7 @@ In this tutorial, you'll learn how Azure Communication Services can be used in a
 
 ### Technologies used in this tutorial include
 
-- React Tutorial
+- React
 - Azure Communication Services
 - Azure Functions
 - Microsoft Graph

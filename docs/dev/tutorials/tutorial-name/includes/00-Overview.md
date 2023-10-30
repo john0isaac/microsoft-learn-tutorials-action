@@ -16,16 +16,8 @@ In this tutorial, you'll learn how Azure Communication Services can be used in a
 
 - [Node](https://nodejs.org) - Node 16+ and npm 7+ are used for this project
 - [git](/devops/develop/git/install-and-set-up-git)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
-- [Azure subscription](https://azure.microsoft.com/free/search)
-- [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
-- [GitHub account](https://github.com)
 
 ### Technologies used in this tutorial include
 
 - React
 - Azure Communication Services
-- Azure Functions
-- Microsoft Graph
-- Microsoft Teams

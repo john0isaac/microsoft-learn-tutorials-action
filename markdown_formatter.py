@@ -60,7 +60,12 @@ def main():
                     remove_relative_links(markdown_file_path)
                 except FileNotFoundError:
                     logger.error('Failed to remove relative links in %s', markdown_file_path)
-
+            elif "add_carriage_return" in in_arg.func:
+                try:
+                    logger.info('Adding carriage return')
+                    add_carriage_return(markdown_file_path)
+                except FileNotFoundError:
+                    logger.error('Failed to add carriage return in %s', markdown_file_path)
 
 # Helper Functions
 
@@ -185,6 +190,70 @@ def remove_relative_links(filepath: str) -> None:
         with open(filepath, 'w', encoding="utf-8") as file:
             file.write(filedata)
 
+def add_carriage_return(filepath: str) -> None:
+    """Function that adds carriage return before and after lines"""
+    # read the file data and skip if file is small
+    with open(filepath, 'r', encoding="utf-8") as file:
+        filelines = file.readlines()
+        filedata = ''.join(filelines)
+        # check if if the file length is less than two sentences
+        if len(filelines) < 2:
+            return
+
+    original_filelines = filelines
+    new_filelines = filelines
+
+    if ":::image" in filedata:
+        new_filelines = images_carriage_return(new_filelines)
+    if ">" in filedata:
+        new_filelines = blockquote_carriage_return(new_filelines)
+
+    if new_filelines != original_filelines:
+        # Write the file out again
+        with open(filepath, 'w', encoding="utf-8") as file:
+            for line in new_filelines:
+                file.write(line)
+
+def images_carriage_return(original_filelines: list) -> list:
+    """ Function that checks images line and add blank lines before and after them """
+    new_filelines = []
+    # check each line in the file lines
+    for i, line in enumerate(original_filelines):
+        # check if the line check image and add the original line data if no image
+        if ':::' in line:
+            # check the line before the image and add new line if not blank
+            if original_filelines[i-1].strip() != '':
+                new_filelines.append('\n')
+
+            new_filelines.append(line)
+
+            # check the line after the image and add new line if not blank
+            if original_filelines[i+1].strip() != '':
+                new_filelines.append('\n')
+        else:
+            new_filelines.append(line)
+    return new_filelines
+
+def blockquote_carriage_return(original_filelines: list) -> list:
+    """ Function that checks block quotes and add blank lines before and after them """
+    new_filelines = []
+    # check each line in the file lines
+    for i, line in enumerate(original_filelines):
+        # check if the line has blockquote and add the original line data if no blockquote
+        if '>' in line:
+            # check the line before the blockquote and add new line if not blank
+            if original_filelines[i-1].strip() != '' and '>' not in original_filelines[i-1] and '<!-- markdownlint-disable MD041 -->' not in line:
+                new_filelines.append('\n')
+
+            new_filelines.append(line)
+
+            # check the line after the blockquote and add new line if not blank
+            if original_filelines[i+1].strip() != '' and '>' not in original_filelines[i+1] and '<!-- markdownlint-disable MD041 -->' not in line:
+                new_filelines.append('\n')
+        else:
+            new_filelines.append(line)
+    return new_filelines
+
 def get_input_args():
     """
     Retrieves and parses the 2 command line arguments provided by the user when
@@ -213,7 +282,8 @@ def get_input_args():
                                  'add_empty_last_line',
                                  'replace_all_with_select',
                                  'remove_links_locale',
-                                 'remove_relative_links'
+                                 'remove_relative_links',
+                                 'add_carriage_return'
                                  ])
 
     return parser.parse_args()

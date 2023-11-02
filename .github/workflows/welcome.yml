@@ -6,8 +6,7 @@ on:
 jobs:
   asses-pull-request:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    permissions: write-all
     steps:
       - name: Add Label and thanks comment to Pull request
         uses: actions/github-script@v6

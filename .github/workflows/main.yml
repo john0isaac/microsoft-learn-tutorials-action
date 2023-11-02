@@ -10,6 +10,8 @@ on:
 jobs:
   format-first-two-lines:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -51,6 +53,8 @@ jobs:
   add-empty-last-line:
     needs: format-first-two-lines
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -92,6 +96,8 @@ jobs:
   replace-all-with-select:
     needs: add-empty-last-line
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -133,6 +139,8 @@ jobs:
   remove-links-locale:
     needs: replace-all-with-select
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -174,6 +182,8 @@ jobs:
   remove-relative-links:
     needs: remove-links-locale
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -215,6 +225,8 @@ jobs:
   add-carriage-return:
     needs: remove-relative-links
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

@@ -6,11 +6,15 @@ on:
 jobs:
   asses-pull-request:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      statuses: write
+      pull-requests: write
+      checks: read
     steps:
       - name: Add Label and thanks comment to Pull request
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueAuthor = context.payload.sender.login
             github.rest.issues.addLabels({

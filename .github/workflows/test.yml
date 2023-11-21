@@ -127,7 +127,7 @@ jobs:
               `
             })
       - name: Update workflow run status
-        if: ${{ steps.check-paths-tracking.outputs.is-valid == 1 }}
+        if: ${{ steps.check-urls-tracking.outputs.is-valid == 1 }}
         run: exit 1
 
   check-urls-locale:

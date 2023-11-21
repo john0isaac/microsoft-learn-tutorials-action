@@ -27,7 +27,7 @@ jobs:
 
       - name: Check broken Paths
         id: check-broken-paths
-        uses: john0isaac/action-check-markdown@v0.0.2-alpha
+        uses: john0isaac/action-check-markdown@v0.0.3-alpha
         with:
           command: check-broken-path
           directory: ./

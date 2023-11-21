@@ -2,7 +2,7 @@
 
 In this exercise you'll create an Azure Communication Services (ACS) resource in the Azure Portal.
 
-:::image type="content" source="../media/1-acs-azure-portal.png" alt-text="ACS in the Azure Portal":::
+:::image type="content" source="../media/1-acs-azure-portal.png " alt-text="ACS in the Azure Portal":::
 
 To get started, perform the following tasks:
 

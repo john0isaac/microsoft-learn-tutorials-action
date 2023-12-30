@@ -46,13 +46,6 @@ jobs:
         shell: bash
         run: cat ./comment.md >> $GITHUB_STEP_SUMMARY
 
-      - name: Get PR number
-        if: ${{ always() &&  hashFiles('./comment.md') != '' }}
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "pr_number=`gh pr view ${GITHUB_REF_NAME} --json number -q '.number'`" >> $GITHUB_ENV
-      
       - name: Post comment
         if: ${{ always() &&  hashFiles('./comment.md') != '' }}
         shell: bash

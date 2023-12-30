@@ -42,12 +42,12 @@ jobs:
           markdown-checker --dir ${{ env.directory }} --func ${{ env.command }} --guide-url ${{ env.guide-url }}
 
       - name: Set job summary
-        if: always() && [ -f './comment.md']
+        if: ${{ always() &&  hashFiles('./comment.md') != '' }}
         shell: bash
         run: cat ./comment.md >> $GITHUB_STEP_SUMMARY
 
       - name: Get PR number
-        if: always() && [ -f './comment.md']
+        if: ${{ always() &&  hashFiles('./comment.md') != '' }}
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,5 +61,5 @@ jobs:
         run: gh pr comment ${GITHUB_REF_NAME} -F ./comment.md
 
       - name: Update workflow run status
-        if: always() && [ -f './comment.md']
+        if: ${{ always() &&  hashFiles('./comment.md') != '' }}
         run: exit 1

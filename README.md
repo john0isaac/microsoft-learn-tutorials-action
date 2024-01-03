@@ -12,4 +12,3 @@ Automatic Formatting:
 - Remove the country locale from links.
 - Remove learn.microsoft.com from links.
 - Add carriage return around images and notes.
-

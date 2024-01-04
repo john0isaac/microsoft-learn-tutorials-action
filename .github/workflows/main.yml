@@ -10,7 +10,7 @@ on:
       - '**.ipynb'
 
 permissions:
-  contents: read
+  pull-requests: read
 
 jobs:
   check-broken-paths:
